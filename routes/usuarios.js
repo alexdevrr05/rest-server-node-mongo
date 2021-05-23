@@ -15,6 +15,7 @@ const {
   usuariosPatch,
   usuariosDelete,
 } = require('../controllers/usuarios');
+const { validarJWT } = require('../middlewares/validar-jwt');
 
 /**
  *  TODO: Siempre que usemos check, tendremos que usar
@@ -59,6 +60,7 @@ router.patch('/', usuariosPatch);
 router.delete(
   '/:id',
   [
+    validarJWT,
     check('id', 'No es un id válido').isMongoId(),
     check('id').custom(existeUsuaroiPorId),
     validarCampos,
