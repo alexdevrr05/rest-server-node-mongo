@@ -12,11 +12,11 @@ const emailExiste = async (email = '') => {
   // Verificar si el correo existe
   const existeEmail = await Usuario.findOne({ email });
   if (existeEmail) {
-    throw new Error(`El correo ${email} correo ya está registrado`);
+    throw new Error(`El correo ${email} ya está registrado`);
   }
 };
 
-const existeUsuaroiPorId = async (id) => {
+const existeUsuarioPorId = async (id) => {
   // Verificar si el correo existe
   const existeUsuario = await Usuario.findById(id);
   if (!existeUsuario) {
@@ -27,5 +27,5 @@ const existeUsuaroiPorId = async (id) => {
 module.exports = {
   esRoleValido,
   emailExiste,
-  existeUsuaroiPorId,
+  existeUsuarioPorId,
 };

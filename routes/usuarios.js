@@ -1,11 +1,17 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { validarCampos } = require('../middlewares/validar-campos');
+
+const {
+  validarCampos,
+  validarJWT,
+  validaRoles,
+  tieneRole,
+} = require('../middlewares');
 
 const {
   esRoleValido,
   emailExiste,
-  existeUsuaroiPorId,
+  existeUsuarioPorId,
 } = require('../helpers/db-validators');
 
 const {
@@ -15,11 +21,10 @@ const {
   usuariosPatch,
   usuariosDelete,
 } = require('../controllers/usuarios');
-const { validarJWT } = require('../middlewares/validar-jwt');
 
 /**
  *  TODO: Siempre que usemos check, tendremos que usar
- * validarCampos ya que ahí se guardan los erroes  y nos
+ * validarCampos ya que ahí se guardan los errores  y nos
  * permite no ejecutar la ruta, o no llegar a ella
  * */
 
@@ -49,7 +54,7 @@ router.put(
   '/:id',
   [
     check('id', 'No es un id válido').isMongoId(),
-    check('id').custom(existeUsuaroiPorId),
+    check('id').custom(existeUsuarioPorId),
     // Evita que el usuario ingrese roles no válidos
     check('rol').custom((rol) => esRoleValido(rol)),
     validarCampos,
@@ -61,8 +66,10 @@ router.delete(
   '/:id',
   [
     validarJWT,
+    // esAdminRole,
+    tieneRole('ADMIN_ROLE', 'VENTAS_ROLE'),
     check('id', 'No es un id válido').isMongoId(),
-    check('id').custom(existeUsuaroiPorId),
+    check('id').custom(existeUsuarioPorId),
     validarCampos,
   ],
 

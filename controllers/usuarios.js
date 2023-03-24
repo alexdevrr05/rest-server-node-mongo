@@ -4,7 +4,7 @@ const bcryptjs = require('bcryptjs');
 const Usuario = require('../models/usuario');
 
 const usuariosGet = async (req = request, res = response) => {
-  const { limite = 5, desde = 0 } = req.query;
+  // const { limite = 5, desde = 0 } = req.query;
   // Solo quiero mostrar los usuarios que estén activos
   const query = { estado: true };
 
@@ -30,8 +30,9 @@ const usuariosGet = async (req = request, res = response) => {
   // Podemos hacer una desesctructuración de arreglos
 
   const [total, usuarios] = await Promise.all([
-    Usuario.countDocuments(query),
-    Usuario.find(query).skip(Number(desde)).limit(Number(limite)),
+    // Usuario.countDocuments(query),
+    // Usuario.find(query).skip(Number(desde)).limit(Number(limite)),
+    Usuario.find(query),
   ]);
 
   res.json({
@@ -88,7 +89,6 @@ const usuariosPatch = (req = request, res = response) => {
 };
 
 const usuariosDelete = async (req = request, res = response) => {
-  const { id } = req.params;
   // Lo borramos fisicamente
   // const usuario = await Usuario.findByIdAndDelete(id);
 
@@ -96,6 +96,7 @@ const usuariosDelete = async (req = request, res = response) => {
    * Es más recomendable pasar el registro a false
    * que borrarlo fisicamente
    */
+  const { id } = req.params;
 
   const usuario = await Usuario.findByIdAndUpdate(id, { estado: false });
 

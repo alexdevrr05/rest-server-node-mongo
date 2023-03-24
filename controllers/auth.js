@@ -3,6 +3,7 @@ const bcryptjs = require('bcryptjs');
 
 const Usuario = require('../models/usuario');
 const { generarJWT } = require('../helpers/generar-JWT');
+const { googleVerify } = require('../helpers/google-verify');
 
 const login = async (req = request, res = response) => {
   const { email, password } = req.body;
@@ -48,6 +49,28 @@ const login = async (req = request, res = response) => {
   }
 };
 
+// Esto pertenece al proced. de google
+// https://developers.google.com/identity/sign-in/web/backend-auth
+
+const googleSignIn = async (req, res = response) => {
+  const { id_token } = req.body;
+
+  try {
+    const googleUser = await googleVerify(id_token);
+
+    console.log(googleUser);
+
+    res.json({
+      msg: 'Google Signin exitoso!',
+    });
+  } catch (error) {
+    res.status(400).json({
+      msg: 'Token de google no reconocido',
+    });
+  }
+};
+
 module.exports = {
   login,
+  googleSignIn,
 };
