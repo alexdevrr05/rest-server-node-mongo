@@ -6,6 +6,7 @@ const {
   validarJWT,
   validaRoles,
   tieneRole,
+  esAdminRole,
 } = require('../middlewares');
 
 const {
@@ -37,7 +38,7 @@ router.post(
     check('nombre', 'El nombre es obligatorio').not().isEmpty(),
     check(
       'password',
-      'El password es obligatorio y debe de ser mayor a 6 caracteres'
+      'El password es obligatorio y debe de tener mínimo 6 caracteres'
     )
       .isLength({ min: 6 })
       .not()
@@ -66,8 +67,9 @@ router.delete(
   '/:id',
   [
     validarJWT,
-    // esAdminRole,
-    tieneRole('ADMIN_ROLE', 'VENTAS_ROLE'),
+    esAdminRole,
+    // tieneRole('USER_ROLE'),
+    tieneRole('ADMIN_ROLE'),
     check('id', 'No es un id válido').isMongoId(),
     check('id').custom(existeUsuarioPorId),
     validarCampos,
