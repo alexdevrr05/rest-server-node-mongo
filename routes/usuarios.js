@@ -62,6 +62,7 @@ router.put(
   ],
   usuariosPut
 );
+
 router.patch('/', usuariosPatch);
 router.delete(
   '/:id',
