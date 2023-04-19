@@ -32,6 +32,7 @@ const {
 const router = Router();
 
 router.get('/', usuariosGet);
+// users register
 router.post(
   '/',
   [

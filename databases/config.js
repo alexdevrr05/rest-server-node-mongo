@@ -10,10 +10,10 @@ const connectDatabase = async () => {
       useCreateIndex: true,
     });
 
-    console.log('Conectado a la DB online');
+    console.log('Conectado a la DB online 🟢');
   } catch (error) {
     console.log(error);
-    throw new Error('No se pudo conectar a la DB');
+    throw new Error('No se pudo conectar a la DB 🔴');
   }
 };
 
