@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="google-signin-client_id"
+      content="356327065146-2okpflv0qd0786udkmbh256te8addlic.apps.googleusercontent.com"
+    />
+
+    <link rel="stylesheet" href="styles.css" />
+    <title>Google Sigin</title>
+  </head>
+  <body>
+    <div class="contenedor">
+      <div class="header">
+        <h1 class="title-header">Google Sigin</h1>
+      </div>
+      <div class="contenedor-btn">
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <a href="#" onclick="signOut();" class="sign-out-google">Sign out</a>
+      </div>
+    </div>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script>
+      console.log(window.location.hostname.includes('localhost'));
+
+      var url = window.location.hostname.includes('localhost')
+        ? 'http://localhost:8080/api/auth/google'
+        : 'https://dashboard.heroku.com/apps/rest-server-node-mongo/api/auth/google';
+
+      function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+
+        // Esto pertenece al proced. de google
+        // https://developers.google.com/identity/sign-in/web/backend-auth
+
+        var id_token = googleUser.getAuthResponse().id_token;
+
+        const data = { id_token };
+
+        fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        })
+          .then((resp) => resp.json())
+          .then((data) => console.log('Nuestro server', data))
+          .catch(console.log);
+      }
+
+      // Botón para cerrar sesión
+
+      function signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+          console.log('User signed out.');
+        });
+      }
+    </script>
+  </body>
+</html>

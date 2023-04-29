@@ -1,67 +1,111 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="google-signin-client_id"
-      content="356327065146-2okpflv0qd0786udkmbh256te8addlic.apps.googleusercontent.com"
-    />
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css">
+    <title>Veterinary</title>
+</head>
+<body>
+    <!-- <header class="header">
+        <div class="contenedor contenido-header">
+            <div class="barra">
+                <a href="/">
+                    <img class="logo" src="build/img/logo.svg" alt="Logotipo de Bienes Raices">    
+                </a>
 
-    <link rel="stylesheet" href="styles.css" />
-    <title>Google Sigin</title>
-  </head>
-  <body>
-    <div class="contenedor">
-      <div class="header">
-        <h1 class="title-header">Google Sigin</h1>
-      </div>
-      <div class="contenedor-btn">
-        <div class="g-signin2" data-onsuccess="onSignIn"></div>
-        <a href="#" onclick="signOut();" class="sign-out-google">Sign out</a>
-      </div>
-    </div>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script>
-      console.log(window.location.hostname.includes('localhost'));
+                <div class="mobile-menu">
+                    <img src="build/img/barras.svg" alt="menu burguer">
+                </div>
 
-      var url = window.location.hostname.includes('localhost')
-        ? 'http://localhost:8080/api/auth/google'
-        : 'https://dashboard.heroku.com/apps/rest-server-node-mongo/api/auth/google';
+                <div class="derecha">
+                    <img src="build/img/dark-mode.svg" alt="Modo oscuro" class="dark-mode-boton">
+                    <nav class="navegacion">
+                        <a href="nosotros.html">Nosotros</a>
+                        <a href="anuncios.html">Anuncios</a>
+                        <a href="blog.html">Blog</a>
+                        <a href="contacto.html">Contacto</a>
+                    </nav>
+                </div>
+            </div> <!--.barra-->
+        </div>
+    </header> 
 
-      function onSignIn(googleUser) {
-        var profile = googleUser.getBasicProfile();
-        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-        console.log('Name: ' + profile.getName());
-        console.log('Image URL: ' + profile.getImageUrl());
-        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+    <main class="contenedor seccion">
+        <h1>VetPet</h1>
 
-        // Esto pertenece al proced. de google
-        // https://developers.google.com/identity/sign-in/web/backend-auth
+        <picture>
+            <img loading="lazy" src="public/img/mapache.jpg" alt="imagen contacto">
+        </picture>
 
-        var id_token = googleUser.getAuthResponse().id_token;
+        <h2>Llene el formulario de consulta</h2>
 
-        const data = { id_token };
+        <form id="miFormulario" class="formulario" method="POST" action="http://localhost:3000/api/mascotas/insertMembresia">
 
-        fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
-        })
-          .then((resp) => resp.json())
-          .then((data) => console.log('Nuestro server', data))
-          .catch(console.log);
-      }
+            <fieldset>
+                <legend>Información Membresía</legend>
 
-      // Botón para cerrar sesión
+                <label for="mebresia">Tipo de Membresía</label>
+                <input type="text" placeholder="Tipo de Membresía" id="mebresia">
 
-      function signOut() {
-        var auth2 = gapi.auth2.getAuthInstance();
-        auth2.signOut().then(function () {
-          console.log('User signed out.');
-        });
-      }
-    </script>
-  </body>
+                <label for="fecha">Fecha de inicio:</label>
+                <input type="date" id="fecha">
+
+                <label for="fecha2">Fecha de vencimiento:</label>
+                <input type="date" id="fecha2">
+
+                <label for="costo">Costo</label>
+                <input type="text" min="1" id="costo">
+                
+            </fieldset>
+
+            <input type="submit" value="Enviar" class="boton-verde">
+        </form>
+
+            <fieldset>
+                <legend>Información sobre la mascota</legend>
+
+                <label for="mascota">Nombre de la mascota</label>
+                <input type="text" placeholder="Nombre de su masctoa" id="mascota">
+
+                <label for="nac">Fecha de nacimiento:</label>
+                <input type="date" id="nac">
+
+                <label for="especie">Especie de la mascota</label>
+                <input type="text" placeholder="Especie de la mascota" id="especie">
+
+                <label for="raza">Raza de la mascota</label>
+                <input type="text" placeholder="Raza de la mascota" min="1">
+
+                <label for="sex">Sexo de la Mascota</label>
+                <input type="text" placeholder="Sexo de su mascota" id="sex">
+            </fieldset>
+
+            <fieldset>
+                <legend>Información el cliente</legend>
+
+                <label for="name">Nombre del cliente</label>
+                <input type="text" placeholder="Nombre del cliente" id="name">
+
+                <label for="email">Correo Electrónico</label>
+                <input type="text" placeholder="Email" id="email">
+
+                <label for="tele">Teléfono</label>
+                <input type="text" placeholder="Teléfono" id="tele">
+
+                <label for="dire">Domicilio</label>
+                <input type="text" placeholder="Dirección de domicilio" id="dire">
+
+                <label for="datecliente">Fecha de registro</label>
+                <input type="text" placeholder="Fecha de registro" id="datecliente">
+            </fieldset>
+
+
+    </main>
+</body>
+
+<!-- <script  src="../src/main.js"></script> -->
+
+<script type="module" src="./app.js"></script>
 </html>

@@ -2,13 +2,18 @@ const express = require('express');
 const cors = require('cors');
 
 const { connectDatabase } = require('../databases/config');
+const bodyParser = require('body-parser');
 
 class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
     this.usuariosPath = '/api/usuarios';
+    this.mascotasPath = '/api/mascotas';
     this.authPath = '/api/auth';
+
+    this.app.use(bodyParser.urlencoded({ extended: false }));
+    this.app.use(bodyParser.json());
 
     this.conectarDB();
     this.middlewares();
@@ -28,6 +33,7 @@ class Server {
   routes() {
     this.app.use(this.usuariosPath, require('../routes/usuarios'));
     this.app.use(this.authPath, require('../routes/auth'));
+    this.app.use(this.mascotasPath, require('../routes/mascotas'));
   }
 
   listen() {

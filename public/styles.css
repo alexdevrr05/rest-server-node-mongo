@@ -43,3 +43,117 @@ body {
   background-color: #5e00ff;
   color: #fff;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+body {
+    font-family: 'Lato',sans-serif;
+    font-size: 1.6rem;
+    background-color: #f1f1f1;
+    line-height: 1.8;
+}
+h1, h2, h3 {
+    font-family: 'Lato', sans-serif;
+    margin: calc(5rem / 2) 0;
+    font-weight: 300;
+    text-align: center;
+    
+}
+
+h1 {
+    font-size: 3.8rem;
+}
+h2 {
+    font-size: 3.4rem;
+}
+h3 {
+    font-size: 3rem;
+}
+h4 {
+    font-size: 2.6rem;
+}
+.formulario p {
+    font-size: 1.4rem;
+    color: grey;
+    margin: 2rem 0 0 0;
+  }
+  
+  .formulario legend {
+    font-size: 2rem;
+    color: gray;
+  }
+  
+  .formulario label {
+    font-weight: 900;
+    width: 70rem;
+    text-transform: uppercase;
+    display: block;
+  }
+  
+  .formulario input:not([type="submit"]),
+  .formulario textarea,
+  .formulario select {
+    padding: 1rem;
+    display: block;
+    width: 100%;
+    background-color: #FFF;
+    border: 1px solid grey;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .formulario textarea {
+    height: 15rem;
+  }
+  
+  .formulario .forma-contacto {
+    max-width: 30rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .formulario input[type="radio"] {
+    margin: 0;
+    width: auto;
+  }
+
+
+
+.seccion {
+    margin-top: calc(5rem / 2);
+    margin-bottom: calc(5rem / 2);
+}
+.boton-verde{
+    background-color: green;
+    color: #FFF;
+    font-weight: 700;
+    text-decoration: none;
+    padding: 1rem 3rem;
+    text-align: center;
+    margin-top: calc(5rem / 2);
+    border: none;
+
+}
+.boton-verde:hover{
+        background-color: darkolivegreen;
+        cursor: pointer;
+}
+
+.seccion {
+    margin-top: calc(5rem / 2);
+    margin-bottom: calc(5rem / 2);
+}
+img,
+picture {
+    height: 40rem;
+    width: 100%;
+    display: block;
+}
+.contenedor {
+    width: 95%;
+    max-width: 120rem;
+    margin: 0 auto;
+}
