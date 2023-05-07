@@ -10,10 +10,12 @@ const getAgradecimientos = async (req = request, res = response) => {
   // Skip significa en este caso: comienza desde
 
   const foundAgradecimientos = await Agradecimiento.find({});
-  const foundsQty = foundAgradecimientos.length;
+  const foundsAllsQty = foundAgradecimientos.length;
   const agradecimientos = await Agradecimiento.find({})
     .skip(Number(desde))
     .limit(Number(limite));
+
+  const currentPageQty = agradecimientos.length;
 
   agradecimientos.forEach((agradecimiento, i) => {
     const colorIndex = i % colors.length;
@@ -22,7 +24,8 @@ const getAgradecimientos = async (req = request, res = response) => {
 
   res.json({
     agradecimientos,
-    foundsQty,
+    foundsAllsQty,
+    currentPageQty,
   });
 };
 
