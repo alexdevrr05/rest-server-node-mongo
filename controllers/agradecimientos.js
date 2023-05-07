@@ -1,11 +1,28 @@
 const { request, response } = require('express');
 const Agradecimiento = require('../models/agradecimientos');
 
+const colors = require('../helpers/colors');
+
 const getAgradecimientos = async (req = request, res = response) => {
-  const agradecimientos = await Agradecimiento.find({});
+  const { limite = 6, desde = 0 } = req.query;
+
+  // Se debe transformar a numero porque el limit espera un numero
+  // Skip significa en este caso: comienza desde
+
+  const foundAgradecimientos = await Agradecimiento.find({});
+  const foundsQty = foundAgradecimientos.length;
+  const agradecimientos = await Agradecimiento.find({})
+    .skip(Number(desde))
+    .limit(Number(limite));
+
+  agradecimientos.forEach((agradecimiento, i) => {
+    const colorIndex = i % colors.length;
+    agradecimiento.color = colors[colorIndex];
+  });
 
   res.json({
     agradecimientos,
+    foundsQty,
   });
 };
 

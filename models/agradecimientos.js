@@ -9,6 +9,9 @@ const AgradecimientoSchema = Schema({
     type: String,
     required: true,
   },
+  color: {
+    type: String,
+  },
 });
 
 AgradecimientoSchema.methods.toJSON = function () {
