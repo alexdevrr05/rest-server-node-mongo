@@ -29,7 +29,8 @@ const login = async (req = request, res = response) => {
 
     if (!validPassword) {
       return res.status(400).json({
-        msg: 'Usuario / Password son incorrectos - password',
+        msg: 'Usuario o password son incorrectos',
+        // msg: 'Usuario / Password son incorrectos - password',
       });
     }
 

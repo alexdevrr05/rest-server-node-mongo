@@ -33,6 +33,10 @@ const validarJWT = async (req = request, res = response, next) => {
 
     req.usuario = usuario;
 
+    res.json({
+      usuario,
+      token,
+    });
     next();
   } catch (error) {
     console.log(error);
