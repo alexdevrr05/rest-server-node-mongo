@@ -5,7 +5,7 @@ const AgradecimientoSchema = Schema({
     type: String,
     required: true,
   },
-  agradecimiento: {
+  agradecimientos: {
     type: String,
     required: true,
   },
