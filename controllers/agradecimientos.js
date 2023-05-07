@@ -5,7 +5,7 @@ const getAgradecimientos = async (req = request, res = response) => {
   const agradecimientos = await Agradecimiento.find({});
 
   res.json({
-    data: agradecimientos,
+    agradecimientos,
   });
 };
 

@@ -11,4 +11,9 @@ const AgradecimientoSchema = Schema({
   },
 });
 
+AgradecimientoSchema.methods.toJSON = function () {
+  const { __v, ...agradecimiento } = this.toObject();
+  return agradecimiento;
+};
+
 module.exports = model('Agradecimiento', AgradecimientoSchema);
