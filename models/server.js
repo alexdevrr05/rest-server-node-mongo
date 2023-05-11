@@ -10,6 +10,7 @@ class Server {
     this.usuariosPath = '/api/usuarios';
     this.authPath = '/api/auth';
     this.agradecimientosPath = '/api/agradecimientos';
+    this.projectsPath = '/api/projects';
 
     this.conectarDB();
     this.middlewares();
@@ -29,6 +30,7 @@ class Server {
   routes() {
     this.app.use(this.usuariosPath, require('../routes/usuarios'));
     this.app.use(this.authPath, require('../routes/auth'));
+    this.app.use(this.projectsPath, require('../routes/projects'));
     this.app.use(
       this.agradecimientosPath,
       require('../routes/agradecimientos')
