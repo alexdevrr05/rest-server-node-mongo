@@ -32,11 +32,11 @@ const postProjects = async (req = request, res = response) => {
       const { ownerProject, title, description } = req.body;
       // console.log('Archivo cargado correctamente:', req.file);
 
-      const imagePath = req.file.path;
+      const image = req.file.filename;
 
       const project = new Project({
         ownerProject,
-        image: imagePath,
+        image,
         title,
         description,
       });

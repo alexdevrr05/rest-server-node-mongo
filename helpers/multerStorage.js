@@ -3,7 +3,7 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'upload/');
+    cb(null, 'uploads/');
   },
   filename: function (req, file, cb) {
     const uniqueFilename = Date.now(); // Genera un identificador único basado en la fecha actual en milisegundos
