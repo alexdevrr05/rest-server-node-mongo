@@ -1,5 +1,7 @@
 const express = require('express');
+const { urlencoded, json } = require('express');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 const { connectDatabase } = require('../databases/config');
 
@@ -23,7 +25,13 @@ class Server {
 
   middlewares() {
     this.app.use(cors());
-    this.app.use(express.json());
+    // this.app.use(express.json());
+
+    this.app.use(urlencoded({ extended: true }));
+    this.app.use(json());
+
+    // this.app.use(express.urlencoded({ extended: true }));
+
     this.app.use(express.static('public'));
   }
 

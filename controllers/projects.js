@@ -1,5 +1,9 @@
 const { request, response } = require('express');
+
+const multer = require('multer');
+
 const Project = require('../models/projects');
+const { storage } = require('../helpers/multerStorage');
 
 const getProjects = async (req = request, res = response) => {
   const { limite = 6, desde = 0 } = req.query;
@@ -13,30 +17,40 @@ const getProjects = async (req = request, res = response) => {
   const currentPageQty = projects.length;
 
   res.json({
-    agradecimientos,
+    projects,
     foundsAllsQty,
     currentPageQty,
   });
 };
 
+const upload = multer({ storage });
+
 const postProjects = async (req = request, res = response) => {
-  const { ownerProject, image, title, description } = req.body;
-
   try {
-    const project = new Project({
-      ownerProject,
-      image,
-      title,
-      description,
-    });
-    await project.save();
+    // upload.single('file')(req, res, function (err)
+    await upload.single('file')(req, res, () => {
+      const { ownerProject, title, description } = req.body;
+      // console.log('Archivo cargado correctamente:', req.file);
 
-    res.json({
-      msg: 'Your project has been successfully published',
+      const imagePath = req.file.path;
+
+      const project = new Project({
+        ownerProject,
+        image: imagePath,
+        title,
+        description,
+      });
+
+      project.save();
+
+      res.json({
+        project,
+      });
     });
-  } catch (error) {
+  } catch (err) {
+    console.error('Error al cargar el archivo:', err);
     return res.status(500).json({
-      msg: error.message,
+      msg: 'Error al cargar el archivo',
     });
   }
 };
