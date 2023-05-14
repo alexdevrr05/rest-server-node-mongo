@@ -45,6 +45,7 @@ const postProjects = async (req = request, res = response) => {
 
       res.json({
         project,
+        msg: 'Proyecto publicado con éxito',
       });
     });
   } catch (err) {
