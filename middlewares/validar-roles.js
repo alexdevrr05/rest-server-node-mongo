@@ -14,11 +14,12 @@ const esAdminRole = (req = request, res = response, next) => {
       msg: `${nombre} no es administrador - No puede hacer esto`,
     });
   }
+
   next();
 };
 
 const tieneRole = (...roles) => {
-  return (req, res = response, next) => {
+  return (req = request, res = response, next) => {
     if (!req.usuario) {
       return res.status(500).json({
         msg: 'Se quiere verificar el role sin validar el token primero',
