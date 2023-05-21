@@ -30,12 +30,14 @@ const getAgradecimientos = async (req = request, res = response) => {
 };
 
 const postAgradecimientos = async (req = request, res = response) => {
-  const { nombre, agradecimientos } = req.body;
+  const { nombre, agradecimientos, userImage, email } = req.body;
 
   try {
     const agradecimiento = new Agradecimiento({
       userName: nombre,
       agradecimientos,
+      userImage,
+      email,
     });
     await agradecimiento.save();
 

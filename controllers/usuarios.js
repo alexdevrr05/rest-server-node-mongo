@@ -2,6 +2,7 @@ const { request, response } = require('express');
 const bcryptjs = require('bcryptjs');
 
 const Usuario = require('../models/usuario');
+const Agradecimiento = require('../models/agradecimientos');
 
 const usuariosGet = async (req = request, res = response) => {
   // const { limite = 5, desde = 0 } = req.query;
@@ -75,9 +76,18 @@ const usuariosPut = async (req = request, res = response) => {
     resto.password = bcryptjs.hashSync(password, salt);
   }
 
+  // Verifica si se cargó una imagen
+  if (req.file) {
+    // Obtén la ruta de la imagen cargada
+    const imagePath = req.file.filename;
+    // Actualiza el campo "imagen" del usuario con la ruta de la imagen
+    resto.image = imagePath;
+  }
+
   // 1er argumento: Buscar por id
   // 2do argumento: ¿Qué va a actualizar?
   const usuario = await Usuario.findByIdAndUpdate(id, resto);
+  await Agradecimiento.updateMany({ email }, { userImage: resto.image });
 
   res.json(usuario);
 };

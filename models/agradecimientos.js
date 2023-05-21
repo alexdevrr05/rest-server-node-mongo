@@ -12,6 +12,12 @@ const AgradecimientoSchema = Schema({
   color: {
     type: String,
   },
+  userImage: {
+    type: String,
+  },
+  email: {
+    type: String,
+  },
 });
 
 AgradecimientoSchema.methods.toJSON = function () {
