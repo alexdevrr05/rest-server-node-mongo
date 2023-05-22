@@ -24,6 +24,7 @@ const {
   usuariosPatch,
   usuariosDelete,
 } = require('../controllers/usuarios');
+const { loadUserSession } = require('../middlewares/loadUserSession');
 
 const upload = multer({ storage });
 
@@ -36,7 +37,8 @@ const upload = multer({ storage });
 const router = Router();
 
 router.get('/', usuariosGet);
-router.get('/loadUserSession', [validarJWT]);
+router.get('/loadUserSession', [loadUserSession]);
+// router.get('/loadUserSession', [validarJWT]);
 // users register
 router.post(
   '/',
@@ -77,7 +79,7 @@ router.delete(
     validarJWT,
     esAdminRole,
     // tieneRole('USER_ROLE'),
-    tieneRole('ADMIN_ROLE'),
+    // tieneRole('ADMIN_ROLE'),
     check('id', 'No es un id válido').isMongoId(),
     check('id').custom(existeUsuarioPorId),
     validarCampos,

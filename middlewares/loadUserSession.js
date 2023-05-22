@@ -2,7 +2,7 @@ const { request, response } = require('express');
 const Usuario = require('../models/usuario');
 const jwt = require('jsonwebtoken');
 
-const validarJWT = async (req = request, res = response, next) => {
+const loadUserSession = async (req = request, res = response, next) => {
   const token = req.header('x-token');
 
   if (!token) {
@@ -32,12 +32,11 @@ const validarJWT = async (req = request, res = response, next) => {
 
     req.usuario = usuario;
 
+    res.json({
+      usuario,
+      token,
+    });
     next(); // Mover esta línea antes de res.json()
-
-    // res.json({
-    //   usuario,
-    //   token,
-    // });
   } catch (error) {
     console.log(error);
     res.status(401).send({
@@ -47,5 +46,5 @@ const validarJWT = async (req = request, res = response, next) => {
 };
 
 module.exports = {
-  validarJWT,
+  loadUserSession,
 };
