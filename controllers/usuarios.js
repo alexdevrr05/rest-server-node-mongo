@@ -4,6 +4,13 @@ const bcryptjs = require('bcryptjs');
 const Usuario = require('../models/usuario');
 const Agradecimiento = require('../models/agradecimientos');
 
+const getUserDetails = async (req = request, res = response) => {
+  const { id } = req.params;
+  const usuario = await Usuario.findById(id);
+
+  res.json({ usuario });
+};
+
 const usuariosGet = async (req = request, res = response) => {
   // const { limite = 5, desde = 0 } = req.query;
   // Solo quiero mostrar los usuarios que estén activos
@@ -116,6 +123,7 @@ const usuariosDelete = async (req = request, res = response) => {
 };
 
 module.exports = {
+  getUserDetails,
   usuariosGet,
   usuariosPost,
   usuariosPut,

@@ -23,6 +23,7 @@ const {
   usuariosPut,
   usuariosPatch,
   usuariosDelete,
+  getUserDetails,
 } = require('../controllers/usuarios');
 const { loadUserSession } = require('../middlewares/loadUserSession');
 
@@ -36,6 +37,7 @@ const upload = multer({ storage });
 
 const router = Router();
 
+router.get('/userDetails/:id', getUserDetails);
 router.get('/', usuariosGet);
 router.get('/loadUserSession', [loadUserSession]);
 // router.get('/loadUserSession', [validarJWT]);
