@@ -1,7 +1,6 @@
 const express = require('express');
 const { urlencoded, json } = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser');
 
 const { connectDatabase } = require('../databases/config');
 
