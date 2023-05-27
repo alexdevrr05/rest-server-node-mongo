@@ -5,10 +5,14 @@ const Usuario = require('../models/usuario');
 const Agradecimiento = require('../models/agradecimientos');
 
 const getUserDetails = async (req = request, res = response) => {
-  const { id } = req.params;
-  const usuario = await Usuario.findById(id);
+  try {
+    const { id } = req.params;
+    const usuario = await Usuario.findById(id);
 
-  res.json({ usuario });
+    res.json({ usuario });
+  } catch (error) {
+    res.json({ error });
+  }
 };
 
 const usuariosGet = async (req = request, res = response) => {
