@@ -9,7 +9,7 @@ const storage = multer.diskStorage({
     const uniqueFilename = Date.now(); // Genera un identificador único basado en la fecha actual en milisegundos
     const fileExtension = path.extname(file.originalname); // Obtiene la extensión del archivo original
     const fileName = uniqueFilename + fileExtension; // Concatena el identificador con la extensión del archivo original
-    console.log({ fileExtension, fileName });
+
     cb(null, fileName); // Asigna el
   },
   fileFilter: function (req, file, cb) {

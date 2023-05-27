@@ -30,7 +30,7 @@ const postProjects = async (req = request, res = response) => {
     // upload.single('file')(req, res, function (err)
     await upload.single('file')(req, res, () => {
       const { ownerProject, title, description } = req.body;
-      // console.log('Archivo cargado correctamente:', req.file);
+      console.log('Archivo cargado correctamente:', req.file);
 
       const image = req.file.filename;
 
