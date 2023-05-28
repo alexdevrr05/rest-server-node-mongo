@@ -71,36 +71,40 @@ const usuariosPost = async (req = request, res = response) => {
 };
 
 const usuariosPut = async (req = request, res = response) => {
-  const { id } = req.params;
+  try {
+    const { id } = req.params;
 
-  /**
-   * Excluimos password, google y email para que no se puedan
-   * actualizar y lo demás "resto", si
-   */
-  const { _id, password, google, email, ...resto } = req.body;
+    /**
+     * Excluimos password, google y email para que no se puedan
+     * actualizar y lo demás "resto", si
+     */
+    const { _id, password, google, email, ...resto } = req.body;
 
-  // TODO: validar contra base de datos
-  if (password) {
-    // Encriptar la contraseña
-    const salt = bcryptjs.genSaltSync();
-    // Cuando se actualizan los datos (PUT) se vuelve a encriptar la password
-    resto.password = bcryptjs.hashSync(password, salt);
+    // TODO: validar contra base de datos
+    if (password) {
+      // Encriptar la contraseña
+      const salt = bcryptjs.genSaltSync();
+      // Cuando se actualizan los datos (PUT) se vuelve a encriptar la password
+      resto.password = bcryptjs.hashSync(password, salt);
+    }
+
+    // Verifica si se cargó una imagen
+    if (req.file) {
+      // Obtén la ruta de la imagen cargada
+      const imagePath = req.file.filename;
+      // Actualiza el campo "imagen" del usuario con la ruta de la imagen
+      resto.image = imagePath;
+    }
+
+    // 1er argumento: Buscar por id
+    // 2do argumento: ¿Qué va a actualizar?
+    const usuario = await Usuario.findByIdAndUpdate(id, resto);
+    await Agradecimiento.updateMany({ email }, { userImage: resto.image });
+
+    res.json(usuario);
+  } catch (error) {
+    res.json({ error });
   }
-
-  // Verifica si se cargó una imagen
-  if (req.file) {
-    // Obtén la ruta de la imagen cargada
-    const imagePath = req.file.filename;
-    // Actualiza el campo "imagen" del usuario con la ruta de la imagen
-    resto.image = imagePath;
-  }
-
-  // 1er argumento: Buscar por id
-  // 2do argumento: ¿Qué va a actualizar?
-  const usuario = await Usuario.findByIdAndUpdate(id, resto);
-  await Agradecimiento.updateMany({ email }, { userImage: resto.image });
-
-  res.json(usuario);
 };
 
 const usuariosPatch = (req = request, res = response) => {
